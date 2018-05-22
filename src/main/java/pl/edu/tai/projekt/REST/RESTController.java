@@ -32,7 +32,6 @@ public class RESTController {
 //        List a = new LinkedList();
 //        a.add(s);
         return "Hi";
-        //return "<h1> Hello guest </h1>";
     }
 
 }
