@@ -1,6 +1,7 @@
 package pl.edu.tai.projekt.DAO;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer UserId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     List<SlotReservation> userReservations;
 

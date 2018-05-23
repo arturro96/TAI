@@ -33,7 +33,7 @@ public class EventEndpoint {
     @Transactional
     public @ResponseBody List<?> getEvents() {
         Query q = entityManager
-                .createQuery("SELECT e FROM Event e JOIN e.blocks b WHERE b.begin > :currDate")
+                .createQuery("SELECT DISTINCT e FROM Event e JOIN e.blocks b WHERE b.begin > :currDate")
                 .setParameter("currDate", new Date());
         return q.getResultList();
     }
