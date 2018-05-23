@@ -1,125 +1,139 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Calendar DEMO</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
-    <link rel="stylesheet" type="text/css" href="./dist/tui-calendar.css" />
-    <link rel="stylesheet" type="text/css" href="./css/default.css" />
-    <link rel="stylesheet" type="text/css" href="./css/icons.css" />
-</head>
-<body>
-<div id="top">
-    <a href="https://github.com/nhnent/tui.calendar">
-        <img src="./images/img-bi.png" srcset="./images/img-bi@2x.png 2x,./images/img-bi@3x.png 3x">
-    </a>
-</div>
-<div id="lnb">
-    <div class="lnb-new-schedule">
-        <button id="btn-new-schedule" type="button" class="btn btn-default btn-block lnb-new-schedule-btn" data-toggle="modal">
-            New schedule</button>
-    </div>
-    <div id="lnb-calendars" class="lnb-calendars">
-        <div>
-            <div class="lnb-calendars-item">
-                <label>
-                    <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
-                    <span></span>
-                    <strong>View all</strong>
-                </label>
-            </div>
+<!DOCTYPE html>
+<html>
+<title>Organizer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    html,body,h1,h2,h3,h4 {font-family:"Lato", sans-serif}
+</style>
+<body onload="addElement()">
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+    <div class="w3-row w3-large w3-light-grey">
+        <div class="w3-col s3">
+            <a href="#" class="w3-button w3-block">Home</a>
         </div>
-        <div id="calendarList" class="lnb-calendars-d1">
+        <div class="w3-col s3">
+            <a href="#user" class="w3-button w3-block">Dodaj użytkownika</a>
+        </div>
+        <div class="w3-col s3">
+            <a href="#addEvent" class="w3-button w3-block">Dodaj event</a>
+        </div>
+        <div class="w3-col s3">
+            <a href="#events" class="w3-button w3-block">Zapisy</a>
         </div>
     </div>
-    <div class="lnb-footer">
-        © NHN Entertainment Corp.
-    </div>
-</div>
-<div id="right">
-    <div id="menu">
-            <span class="dropdown">
-                <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="true">
-                    <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
-                    <span id="calendarTypeName">Dropdown</span>&nbsp;
-                    <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-                            <i class="calendar-icon ic_view_day"></i>Daily
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-                            <i class="calendar-icon ic_view_week"></i>Weekly
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-                            <i class="calendar-icon ic_view_month"></i>Month
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
-                            <i class="calendar-icon ic_view_week"></i>2 weeks
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
-                            <i class="calendar-icon ic_view_week"></i>3 weeks
-                        </a>
-                    </li>
-                    <li role="presentation" class="dropdown-divider"></li>
-                    <li role="presentation">
-                        <a role="menuitem" data-action="toggle-workweek">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
-                            <span class="checkbox-title"></span>Show weekends
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a role="menuitem" data-action="toggle-start-day-1">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
-                            <span class="checkbox-title"></span>Start Week on Monday
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a role="menuitem" data-action="toggle-narrow-weekend">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
-                            <span class="checkbox-title"></span>Narrower than weekdays
-                        </a>
-                    </li>
-                </ul>
-            </span>
-        <span id="menu-navi">
-                <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
-                <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
-                    <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
-                    <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
-                </button>
-            </span>
-        <span id="renderRange" class="render-range"></span>
-    </div>
-    <div id="calendar"></div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
-<script type="text/javascript" src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
-<script type="text/javascript" src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
-<script src="./dist/tui-calendar.js"></script>
-<script src="./js/data/calendars.js"></script>
-<script src="./js/data/schedules.js"></script>
-<script src="./js/theme/dooray.js"></script>
-<script src="./js/default.js"></script>
+<!-- Content -->
+<div id="parent" class="w3-content" style="max-width:1100px;margin-top:80px;margin-bottom:80px">
+
+    <!-- Contact -->
+    <div class="w3-center w3-padding-64" id="user">
+        <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Dodaj użytkownika</span>
+    </div>
+
+    <form class="w3-container" action="javascript:alert('Dodano użytkownika');" target="_blank">
+        <div class="w3-section">
+            <label>Nick</label>
+            <input id="nick" class="w3-input w3-border w3-hover-border-black" style="width:50%;" type="text" name="nick" required>
+        </div>
+        <div class="w3-section">
+            <label>E-mail</label>
+            <input id="mail" class="w3-input w3-border w3-hover-border-black" style="width:50%;" type="email" name="email" required>
+        </div>
+        <button type="submit" onclick="addUser()" class="w3-button w3-block w3-black" style="width:50%;">Dodaj</button>
+    </form>
+
+
+    <div class="w3-center w3-padding-64" id="addEvent">
+        <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Dodaj event</span>
+    </div>
+
+    <form id="mainForm" class="w3-container" action="javascript:alert('Dodano event');" target="_blank">
+        <div class="w3-section">
+            <label>Nazwa</label>
+            <input id="event_name" class="w3-input w3-border w3-hover-border-black" style="width:50%;" type="text" name="event_name" required>
+        </div>
+        <div class="w3-section">
+            <label>Prowadzący</label>
+            <input class="w3-input w3-border w3-hover-border-black" style="width:50%;" type="text" name="Name" required>
+        </div>
+        <div class="w3-section">
+            <label>Liczba dni</label>
+            <input id="days_count" class="w3-input w3-border w3-hover-border-black" style="width:50%;" type="number" name="days" required>
+        </div>
+        <button type="submit" onclick="addDayInfo()" class="w3-button w3-block w3-black" style="width:50%;">Dodaj</button>
+    </form>
+
+    <div class="w3-center w3-padding-64" id="addBlock">
+        <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Szczegóły</span>
+    </div>
+
+
+    <div class="w3-row-padding" id="events">
+        <div class="w3-center w3-padding-64">
+            <h3>Dostępne zapisy</h3>
+            <p>Wybierz event, na który chcesz się zapisać</p>
+        </div>
+        <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-black w3-large w3-padding-16">TAI - projekt</li>
+                <li class="w3-padding-16"><b>Prowadzący: </b> A</li>
+                <li class="w3-light-grey w3-padding-24">
+                    <button onclick="postEvent()" class="w3-button w3-green w3-padding-large">Zapisz się</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-black w3-large w3-padding-16">Kompilatory</li>
+                <li class="w3-padding-16"><b>Prowadzący: </b> C</li>
+                <li class="w3-light-grey w3-padding-24">
+                    <button class="w3-button w3-green w3-padding-large">Zapisz się</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-black w3-large w3-padding-16">Systemy rozproszone</li>
+                <li class="w3-padding-16"><b>Prowadzący: </b> D</li>
+                <li class="w3-light-grey w3-padding-24">
+                    <button class="w3-button w3-green w3-padding-large">Zapisz się</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-black w3-large w3-padding-16">TAI - oddawanie</li>
+                <li class="w3-padding-16"><b>Prowadzący: </b> E</li>
+                <li class="w3-light-grey w3-padding-24">
+                    <button class="w3-button w3-green w3-padding-large">Zapisz się</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-black w3-large w3-padding-16">TAI - oddawanie</li>
+                <li class="w3-padding-16"><b>Prowadzący: </b> F</li>
+                <li class="w3-light-grey w3-padding-24">
+                    <button class="w3-button w3-green w3-padding-large">Zapisz się</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </body>
+
+<script src="app.js"></script>
 </html>
+
