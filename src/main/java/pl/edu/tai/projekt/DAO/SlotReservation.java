@@ -17,7 +17,7 @@ public class SlotReservation {
 //  beginOfSlot = Block.begin + offset*Block.minPerSlot
     private int offset;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "userId")
     private User user;
 
@@ -53,5 +53,23 @@ public class SlotReservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    @Override
+    public String toString() {
+        return "SlotReservation{" +
+                "reservationId=" + reservationId +
+                ", rootBlock=" + rootBlock +
+                ", offset=" + offset +
+                ", user=" + user +
+                '}';
     }
 }

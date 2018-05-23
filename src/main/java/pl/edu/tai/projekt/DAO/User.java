@@ -10,9 +10,9 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int UserId;
+    private Integer UserId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     List<SlotReservation> userReservations;
 
     private String nick;
@@ -20,6 +20,33 @@ public class User {
 
     public User(){
         ;
+    }
+
+    public User(String nick, String mail) {
+        this.nick = nick;
+        this.mail = mail;
+    }
+
+    public User(List<SlotReservation> userReservations, String nick, String mail) {
+        this.userReservations = userReservations;
+        this.nick = nick;
+        this.mail = mail;
+    }
+
+    public int getUserId() {
+        return UserId;
+    }
+
+    public List<SlotReservation> getUserReservations() {
+        return userReservations;
+    }
+
+    public void setUserReservations(List<SlotReservation> userReservations) {
+        this.userReservations = userReservations;
+    }
+
+    public void setUserId(Integer userId) {
+        UserId = userId;
     }
 
     public String getNick() {
@@ -36,5 +63,15 @@ public class User {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "UserId=" + UserId +
+                ", userReservations=" + userReservations +
+                ", nick='" + nick + '\'' +
+                ", mail='" + mail + '\'' +
+                '}';
     }
 }
