@@ -1,3 +1,5 @@
+var slots = [];
+
 function addElement()
 {
     var newDiv = document.createElement("div");
@@ -31,7 +33,7 @@ function addEventDetails()
         "    <label>Liczba minut na zespół</label>\n" +
         "    <input class=\"w3-input w3-border w3-hover-border-black\" style=\"width:50%;\" type=\"number\" name=\"quantity\" min=\"5\" max=\"60\"  required>\n" +
         "    </div>\n" +
-        "<button type=\"submit\" class=\"w3-button w3-block w3-black\" style=\"width:50%;\">Dodaj</button>" +
+        "<button type=\"submit\" onclick=\"addOneBlock(newFrom)\" class=\"w3-button w3-block w3-black\" style=\"width:50%;\">Dodaj</button>" +
         "<p> </p>";
 
     //document.getElementById("addEvent").appendChild(newForm);
@@ -110,4 +112,28 @@ function addUser() {
     };
     var data = JSON.stringify({"nick": nick, "mail": mail});
     xhr.send(data);
+}
+
+function addOneBlock(newForm) {
+    var startDate = newForm.getElementsByTagName("input")[0].value;
+    var endDate = newForm.getElementsByTagName("input")[1].value;
+    var slotTime = newForm.getElementsByTagName("input")[2].value;
+    var data = JSON.stringify({"begin": startDate, "end": endDate, "minPerSlot": slotTime});
+    slots.push(data);
+    alert("Dodano blok")
+}
+
+function addBlock() {
+    var xhr = new XMLHttpRequest();
+    var url = "api/addBlock";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log("Posted");
+        }
+    };
+    var data = JSON.stringify({"eventID": 1, "eventblocks": slots});
+    xhr.send(data);
+    slots = [];
 }
