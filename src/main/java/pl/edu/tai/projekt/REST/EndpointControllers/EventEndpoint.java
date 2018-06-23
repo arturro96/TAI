@@ -38,7 +38,7 @@ public class EventEndpoint {
         return q.getResultList();
     }
 
-    @PostMapping(path = "api/addEvent", consumes = "application/json")
+    @PostMapping(path = "teacher/api/addEvent", consumes = "application/json")
     @Transactional
     public @ResponseBody
     Event addEvent(@RequestBody AddEventRequest request) {

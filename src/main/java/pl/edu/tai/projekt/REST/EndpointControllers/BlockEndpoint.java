@@ -23,7 +23,7 @@ public class BlockEndpoint {
     @PersistenceContext
     EntityManager entityManager;
 
-    @PostMapping(path = "api/addBlock", consumes = "application/json")
+    @PostMapping(path = "teacher/api/addBlock", consumes = "application/json")
     @Transactional
     public @ResponseBody Iterable<Block> addBlock(@RequestBody AddBlockRequest request) {
         System.out.println("Date: " + new Date().toString());
@@ -31,7 +31,7 @@ public class BlockEndpoint {
 
         if(e==null || request.getEventBlocks() == null
                 || request.getEventBlocks().isEmpty()) {
-
+            System.out.println("null");
             return null;
         }
 
