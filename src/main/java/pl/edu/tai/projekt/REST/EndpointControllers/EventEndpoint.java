@@ -29,7 +29,7 @@ public class EventEndpoint {
     }
 
 
-    @GetMapping(path = "api/events")
+    @GetMapping(path = "/api/events", produces = "application/json")
     @Transactional
     public @ResponseBody List<?> getEvents() {
         Query q = entityManager

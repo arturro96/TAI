@@ -56,6 +56,8 @@ public class BlockEndpoint {
                     System.out.println("Next slot "+ nextSlot.toString());
                     no++;
                 }
+                SlotReservation sr = new SlotReservation(b,no,null);
+                entityManager.persist(sr);
 
                 e.addBlock(b);
             }

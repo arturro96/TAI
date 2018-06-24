@@ -21,7 +21,7 @@ public class ReservationsEndpoint {
     @PersistenceContext
     EntityManager entityManager;
 
-    @PostMapping(path = "api/reserveSlot")
+    @PostMapping(path = "student/api/reserveSlot", consumes = "application/json")
     @Transactional
     public ResponseEntity makeReservation(@RequestBody ReservationRequest request) {
 
