@@ -24,6 +24,7 @@ public class EventEndpoint {
     @Transactional
     public @ResponseBody
     Event getEvent(@PathVariable(name = "eventId", required = true) int eventId){
+        System.out.println("GetEventById");
         Event e = entityManager.find(Event.class, eventId);
         return e;
     }

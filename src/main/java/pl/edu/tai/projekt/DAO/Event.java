@@ -21,7 +21,6 @@ public class Event {
     @ManyToOne
     private User owner;
 
-//    @JsonIgnore
     @OneToMany(mappedBy = "rootEvent", cascade = {CascadeType.ALL})
     Collection<Block> blocks;
 

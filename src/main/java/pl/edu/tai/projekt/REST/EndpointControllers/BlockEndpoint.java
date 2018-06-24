@@ -1,20 +1,15 @@
 package pl.edu.tai.projekt.REST.EndpointControllers;
 
 import org.aspectj.weaver.patterns.ConcreteCflowPointcut;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.tai.projekt.DAO.Block;
 import pl.edu.tai.projekt.DAO.Event;
 import pl.edu.tai.projekt.DAO.SlotReservation;
 import pl.edu.tai.projekt.REST.Requests.AddBlockRequest;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Calendar;
 import java.util.Date;
 
 @RestController
@@ -36,9 +31,6 @@ public class BlockEndpoint {
         }
 
         for(Block b : request.getEventBlocks()) {
-            System.out.println("New blocks");
-//             begin > currentTime && begin < end && minPerSlot >= 1 min
-//            System.out.println("New block added");
             if(b.getBegin().after(new Date())
                     && b.getEnd().after(b.getBegin())
                     && b.getMinPerSlot() > 0) {
@@ -53,7 +45,6 @@ public class BlockEndpoint {
                     SlotReservation sr = new SlotReservation(b,no,null);
                     entityManager.persist(sr);
                     nextSlot= new Date(nextSlot.getTime() +(60000*mps));
-                    System.out.println("Next slot "+ nextSlot.toString());
                     no++;
                 }
                 SlotReservation sr = new SlotReservation(b,no,null);
@@ -64,6 +55,15 @@ public class BlockEndpoint {
         }
 
         return e.getBlocks();
+    }
+
+
+    @GetMapping(path = "/api/reservationForBlock/{BlockId}", produces = "application/json")
+    @Transactional
+    public @ResponseBody
+    Iterable<?> getEvent(@PathVariable(name = "BlockId", required = true) int BlockId){
+        Block b = entityManager.find(Block.class, BlockId);
+        return b.getReservations();
     }
 
 }

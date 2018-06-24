@@ -1,5 +1,7 @@
 package pl.edu.tai.projekt.DAO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class SlotReservation {
 
     @ManyToOne
     @JoinColumn(name="blockId")
+    @JsonIgnore
     Block rootBlock;
 
 //  beginOfSlot = Block.begin + offset*Block.minPerSlot

@@ -77,6 +77,14 @@ public class Block {
         this.minPerSlot = minPerSlot;
     }
 
+    public List<SlotReservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<SlotReservation> reservations) {
+        this.reservations = reservations;
+    }
+
     @Override
     public String toString() {
         return "Block{" +
