@@ -1,5 +1,8 @@
 package pl.edu.tai.projekt.DAO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -10,6 +13,7 @@ import java.util.List;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonSerialize
     private int eventId;
 
     private String title = null;
@@ -17,7 +21,7 @@ public class Event {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "rootEvent")
+    @OneToMany(mappedBy = "rootEvent", cascade = {CascadeType.ALL})
     Collection<Block> blocks;
 
     {
@@ -62,4 +66,12 @@ public class Event {
         blocks.add(b);
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", title='" + title + '\'' +
+                ", owner=" + owner +
+                '}';
+    }
 }

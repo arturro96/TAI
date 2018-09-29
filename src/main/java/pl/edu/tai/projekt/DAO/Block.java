@@ -1,5 +1,7 @@
 package pl.edu.tai.projekt.DAO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +15,9 @@ public class Block {
 
     @ManyToOne
     @JoinColumn(name = "eventID")
+    @JsonIgnore
     Event rootEvent;
+
 
     @OneToMany(mappedBy = "rootBlock")
     List<SlotReservation> reservations;
@@ -45,6 +49,14 @@ public class Block {
         return begin;
     }
 
+    public int getBlockId() {
+        return blockId;
+    }
+
+    public void setBlockId(int blockId) {
+        this.blockId = blockId;
+    }
+
     public void setBegin(Date begin) {
         this.begin = begin;
     }
@@ -63,5 +75,25 @@ public class Block {
 
     public void setMinPerSlot(int minPerSlot) {
         this.minPerSlot = minPerSlot;
+    }
+
+    public List<SlotReservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<SlotReservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "blockId=" + blockId +
+                ", rootEvent=" + rootEvent +
+                ", reservations=" + reservations +
+                ", begin=" + begin +
+                ", end=" + end +
+                ", minPerSlot=" + minPerSlot +
+                '}';
     }
 }

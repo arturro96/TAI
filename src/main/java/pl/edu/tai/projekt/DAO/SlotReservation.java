@@ -1,5 +1,7 @@
 package pl.edu.tai.projekt.DAO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,12 +14,13 @@ public class SlotReservation {
 
     @ManyToOne
     @JoinColumn(name="blockId")
+    @JsonIgnore
     Block rootBlock;
 
 //  beginOfSlot = Block.begin + offset*Block.minPerSlot
     private int offset;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "userId")
     private User user;
 
@@ -53,5 +56,23 @@ public class SlotReservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    @Override
+    public String toString() {
+        return "SlotReservation{" +
+                "reservationId=" + reservationId +
+                ", rootBlock=" + rootBlock +
+                ", offset=" + offset +
+                ", user=" + user +
+                '}';
     }
 }
